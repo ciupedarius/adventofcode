@@ -18,33 +18,16 @@ func main() {
 }
 
 func part1(input int) {
-	i := 1
-	sq := 1
-	var x, y int
-	for true {
-		if input < sq {
-			// find y coordinate = depth from '1'
-			y = (i - 1) / 2
-			// find x coordinate by comparing with axes from '1'
-			//    **x**
-			//	  x*1*x
-			//	  **x**
-			num := int(math.Sqrt(float64(sq)))
-			min := sq
-			for j := sq - int(num/2); j > (num-2)*(num-2); j = j - num + 1 {
-				diff := int(math.Abs(float64(j - input)))
-				if diff < min {
-					min = diff
-					x = diff
-				}
-			}
-			break
-		} else {
-			i += 2
-			sq = i * i
-		}
+	// improved version
+	sideLength := int(math.Ceil(math.Sqrt(float64(input))))
+	if sideLength%2 == 0 {
+		sideLength++ // even numbers belong to odd side lengths (3,5,7...)
 	}
-	fmt.Println("Distance =", x+y)
+	y := (sideLength - 1) / 2                                              // axis length from '1'
+	indexCycle := input - (sideLength-2)*(sideLength-2)                    // cycle starts when a new spiral is formed
+	offsetFromCorner := indexCycle % (sideLength - 1)                      // distance to nearest corner
+	x := int(math.Abs(float64(offsetFromCorner - ((sideLength - 1) / 2)))) // chage from offset to corner to offset from axis
+	fmt.Println(x + y)
 }
 
 func part2(input int) {
