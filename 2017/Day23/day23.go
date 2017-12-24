@@ -17,12 +17,18 @@ func main() {
 		//run part 1 as default
 		part = 1
 	}
+	if part == 1 {
+		part1()
+	} else {
+		part2()
+	}
+
+}
+
+func part1() {
 	input, _ := ioutil.ReadFile("input.txt")
 	lines := strings.Split(string(input), "\r\n")
 	registers := make(map[string]int)
-	if part == 2 {
-		registers["a"] = 1
-	}
 	count := 0
 	for i := 0; i < len(lines); i++ {
 		cmd := strings.Split(lines[i], " ")
@@ -67,9 +73,36 @@ func main() {
 			break
 		}
 	}
-	if part == 1 {
-		fmt.Println(count)
-	} else {
-		fmt.Println(registers["h"])
+	fmt.Println(count)
+}
+
+func part2() {
+	// convert asm code into go code
+	var a, b, c, d, f, g, h int
+	a = 1
+	b = 57
+	c = b
+	if a != 0 {
+		b = b*100 + 100000
+		c = b + 17000
 	}
+	for true {
+		f = 1
+		d = 2
+		for d = 2; d < b; d++ {
+			if b%d == 0 {
+				f = 0
+				break
+			}
+		}
+		if f == 0 {
+			h++
+		}
+		g = b - c
+		b += 17
+		if g == 0 {
+			break
+		}
+	}
+	fmt.Println(h)
 }
